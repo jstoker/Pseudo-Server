@@ -1,8 +1,19 @@
-link_remote = 'localhost'
-link_port = 7000
+#
+# Server Link configuration
+#
 
-link_name = 'pseudo-server.jcs.me.uk'
-link_sid  = '42T'
+link_remote = 'remote.server.you.want.to.link.to.example'
+link_port = 7000 # Server port on above host.
+
+link_name = 'pseudo-server.rest.of.server.name.example' # name parameter in links.conf
+link_sid  = '123' # MUST be a UNUSED SID.
 
 link_pass = 'incoming!password' # This is the value that is in links.conf (Already reversed)
 link_remote_pass = 'outgoing!password' # This is the value that is in links.conf (Already reversed)
+
+# 
+# Bot configuration
+# 
+
+bot_name = 'Pseudo-User'
+bot_uid = 'AAAAB' # Do NOT change unless you know what you are doing.
