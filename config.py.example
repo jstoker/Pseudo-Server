@@ -1,0 +1,8 @@
+link_remote = 'localhost'
+link_port = 7000
+
+link_name = 'pseudo-server.jcs.me.uk'
+link_sid  = '42T'
+
+link_pass = 'incoming!password' # This is the value that is in links.conf (Already reversed)
+link_remote_pass = 'outgoing!password' # This is the value that is in links.conf (Already reversed)
