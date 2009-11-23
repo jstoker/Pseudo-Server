@@ -31,3 +31,9 @@ class Socket (threading.Thread):
 			self.socket.send (':' + str(config.link_sid) + ' ' + str(data) + '\r\n')
 		else:
 			return False
+
+	def usend (self, uid, data):
+		if self.connected:
+			self.socket.send (':' + str(config.link_sid) + str(uid) + ' ' + str(data) + '\r\n')
+		else:
+			return False
