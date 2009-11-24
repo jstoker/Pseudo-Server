@@ -16,4 +16,11 @@ link_remote_pass = 'outgoing!password' # This is the value that is in links.conf
 # 
 
 bot_name = 'Pseudo-User'
-bot_uid = 'AAAAB' # Do NOT change unless you know what you are doing.
+bot_uid = 'AAAAAB' # Do NOT change unless you know what you are doing.
+bot_opertype = 'Service'# Default Bot Oper Type
+
+#
+# Other
+#
+
+link_version = '0.0.0'
