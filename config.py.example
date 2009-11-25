@@ -1,26 +1,8 @@
-#
-# Server Link configuration
-#
-
-link_remote = 'remote.server.you.want.to.link.to.example'
-link_port = 7000 # Server port on above host.
-
-link_name = 'pseudo-server.rest.of.server.name.example' # name parameter in links.conf
-link_sid  = '123' # MUST be a UNUSED SID.
-
-link_pass = 'incoming!password' # This is the value that is in links.conf (Already reversed)
-link_remote_pass = 'outgoing!password' # This is the value that is in links.conf (Already reversed)
-
-# 
-# Bot configuration
-# 
-
-bot_name = 'Pseudo-User'
-bot_uid = 'AAAAAB' # Do NOT change unless you know what you are doing.
-bot_opertype = 'Service'# Default Bot Oper Type
-
-#
-# Other
-#
-
-link_version = '0.0.0'
+link = 	{
+			'remote_host': 'server.you.are.linking.with',
+			'remote_port':  7000,
+			'server': 'pseudo-server.jcs.me.uk', # My own name.
+			'sid': '123',
+			'sendpass': 'outgoing!password', # sendpass in inspircd config. (DO NOT REVERSE)
+			'recvpass': 'incoming!password', # recvpass in inspircd config. (DO NOT REVERSE)
+		}
