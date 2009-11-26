@@ -6,3 +6,4 @@ link = 	{
 			'sendpass': 'outgoing!password', # sendpass in inspircd config. (DO NOT REVERSE)
 			'recvpass': 'incoming!password', # recvpass in inspircd config. (DO NOT REVERSE)
 		}
+chan_log = '#services' # Channel to output errors/messages to.
