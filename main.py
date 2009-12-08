@@ -30,24 +30,29 @@ class serverProtocol (LineReceiver):
 		words = line.split (' ')
 		if len(words) < 2:
 			return
+		
 		print words
 		if words[0] == 'SERVER':
 			if words[2] == config.link['sendpass']:
 				self.sendLine ('BURST')
 				self.sendLine (':%s VERSION :JStoker IRC Pseudo-Server' % config.link['server'])
 				# Burst UID's here.
-				# self.sendLine ('UID blah')
+				self.sendLine (':' + config.link ['sid'] + ' UID AAAAAA ' + '1 ' + config.bot['nick'] + ' ' + config.bot['host'] + ' ' + config.bot['host'] + ' ' + config.bot['ident'] + ' 0.0.0.0 1 +iIo :Pseudo-' + config.bot['gecos'])
+				self.sendLine (':' + config.link ['sid'] + 'AAAAAA OPERTYPE ' + config.bot['oper'])
 				self.sendLine ('ENDBURST')
-				self.privmsg_server ('Burst completed.')
+				
+				self.privmsg_server ('Connected to %s.' % config.link['remote_host'])
+			else:
+				self.sendLine ('ERROR :Invalid credentials')
+				self.close()
 
 		elif words[1] == 'PING':
 			self.ssendLine ('PONG %s' % words[2])
-			self.privmsg_server ('Pong.')
 
 		# Nick Tracking
-		if words[1] == 'UID':
+		elif words [1] == 'UID':
 			self.uuid [words[2]] = [words[4]]
-		
+
 		elif words [1] == 'NICK':
 			self.uuid [words[0][1:]][0] = words [2]
 
@@ -58,7 +63,6 @@ class serverProtocol (LineReceiver):
 	
 	def getNick (self, uuid):
 		return self.uuid [uuid]
-#		self.sendLine(self.answers[line])
 
 	def privmsg_server (self, msg):
 		self.ssendLine ('PRIVMSG %s :%s' % (config.chan_log, msg))
@@ -74,13 +78,8 @@ class linkFactory(protocol.ClientFactory):
 		print "Connection lost!"
 		reactor.stop()
 
-
-# this connects the protocol to a server runing on port 8000
-def main():
+if __name__ == '__main__':
 	f = linkFactory()
 	reactor.connectTCP(config.link['remote_host'], config.link['remote_port'], f)
 	reactor.run()
 
-# this only runs if the module was *not* imported
-if __name__ == '__main__':
-	main()

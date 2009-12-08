@@ -7,3 +7,11 @@ link = 	{
 			'recvpass': 'incoming!password', # recvpass in inspircd config. (DO NOT REVERSE)
 		}
 chan_log = '#services' # Channel to output errors/messages to.
+
+bot = {
+	'nick': 'Psuedo-User',
+	'host': 'psudo-server.jcs.me.uk',
+	'ident': 'pseudo',
+	'gecos': 'User!',
+	'oper': 'Pseudo-Oper'
+	}
