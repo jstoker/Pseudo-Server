@@ -1,10 +1,10 @@
 link = {
-    'localhost': {
-        'remote':          ('server.you.are.linking.with', 7000),
-        'server':          'pseudo-server.jcs.me.uk',
-        'sid':             '30D',
-        'sendpass':        'outgoing!password', # This is the password we will be sent. (sendpass on remote)
-        'recvpass':        'incoming!password'  # This is the password we will be recieved. (recvpass on remote)
-    }
+	'localhost': {
+ 		'protocol':		'charybdis3', # Valid options: charybdis3, inspircd12.
+		'remote':		('server.you.are.linking.with', 7000),
+		'server':		'pseudo-server.jcs.me.uk',
+		'sid':			'30D', # Optional.
+		'pass':			'password'
+	},
 }
-         
+

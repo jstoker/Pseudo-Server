@@ -1,5 +1,6 @@
 import asyncore, socket
 import time, sys
+import modules
 import config
 
 
@@ -17,15 +18,21 @@ class Sock (asyncore.dispatcher):
 		
 		self.sendq = ''
 		self.recvq = ''
+		self.caps = []
+		
+		self.protocol = modules.load(conf['protocol'], self)
 
 	def push (self, msg):
-		self.sendq += ':%s %s\r\n' % (self.sid, msg)
+		self.sendq += '%s\r\n' % msg
 	
 	def handle_connect (self):
 		print '!!!\tConnecting to %s:%d!' % (self.connectedto)
-		
+		if hasattr(self.protocol, 'connect'):
+			self.protocol.connect()
+
 	def handle_close (self):
 		print '!!!\tClose.'
+		modules.unload(self.protocol)
 		self.close()
 	
 	def handle_read (self):
@@ -36,38 +43,8 @@ class Sock (asyncore.dispatcher):
 			self.recvq = '\r\n'.join(messages)
 			print 'Recv:\t%s' % message
 			if message != '':
-				self.parse(message)
+				self.protocol.parse(message)
 	
-	def parse (self, message):
-		words = message.split(' ')
-		if words[0] == 'CAPAB':
-			if words[1] == 'START':
-				self.push ('CAPAB %s' % words[1])
-			elif words[1] == 'CAPABILITIES':
-				if message.find ('PROTOCOL') != -1:
-					def getcap (msg, cap):
-						cap = msg[msg.find(cap):]
-						return cap[:cap.find(' ')]
-					caps = []
-					caps.append(getcap(message,'PROTOCOL'))   # CAPS that are apparently required.
-					caps.append(getcap(message,'IP6SUPPORT'))  # Tested via trial & error.
-					self.push ('CAPAB CAPABILITIES :%s' % ' '.join(caps))
-			elif words[1] == 'END':
-				self.push ('CAPAB END')
-				self.push ('SERVER %s %s 0 %s :JStoker\'s Pseudo-Server 0.1.0' % (self.conf['server'], self.conf['recvpass'], self.conf['sid']))
-
-		if words[0] == 'SERVER':
-			if words[2] == config.link[self.name]['sendpass']:
-				self.remote_sid = words[4]
-				self.push ('BURST %s' % currts())
-			else:
-				self.push ('ERROR :Invalid credentials')
-		elif words[1] == 'BURST':
-			if words[0][1:] == self.remote_sid:
-				self.push ('ENDBURST')
-		if words[1] == 'PING':
-			self.push ('PONG %s %s' % (words[3], words[2]))
-			
 	def writable (self):
 		return len(self.sendq) > 0
 	
