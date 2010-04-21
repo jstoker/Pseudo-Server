@@ -6,6 +6,7 @@ class protocol:
 		self.sock = socket
 		self.send = self.sock.push
 		self.conf = self.sock.conf
+		self.caps = []
 
 	def connect (self):
 		pass
@@ -24,7 +25,7 @@ class protocol:
 				if message.find ('IP6SUPPORT') != -1:
 					self.caps.append(getcap(message,'IP6SUPPORT'))  # Tested via trial & error.
 				if len(self.caps) >1:
-					self.send ('CAPAB CAPABILITIES :%s' % ' '.join(caps))
+					self.send ('CAPAB CAPABILITIES :%s' % ' '.join(self.caps))
 			elif words[1] == 'END':
 				self.send ('CAPAB END')
 				self.send ('SERVER %s %s 0 %s :Pseudo-Server - http://github.com/jstoker/pseudo-server' % (self.conf['server'], self.conf['pass'], self.conf['sid']))

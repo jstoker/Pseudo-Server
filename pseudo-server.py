@@ -18,7 +18,6 @@ class Sock (asyncore.dispatcher):
 		
 		self.sendq = ''
 		self.recvq = ''
-		self.caps = []
 		
 		self.protocol = modules.load(conf['protocol'], self)
 
