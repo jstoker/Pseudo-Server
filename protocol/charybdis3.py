@@ -16,7 +16,6 @@ class protocol:
 		words = message.split(' ')
 		if words[0] == 'PING':
 			self.send ('PONG %s' % ' '.join(words[1:]))
-			self.send ('PING %s' % ' '.join(words[1:]))
 
 	def fini(self):
 		pass
